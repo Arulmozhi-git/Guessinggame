@@ -1,26 +1,24 @@
-#!/usr/bin/env bash
+#!/bin/bash bash
 # File: guessinggame.sh
-# Peer graded assignment for Coursera/JHU The Unix Workbench
 
-count=$(ls -1 | wc -l)
-
-function correct_guess {        # One function...
-    if [[ $1 -lt $2 ]]          # One if statement ...
-    then
-	echo "Too low!"
-    elif [[ $1 -gt $2 ]]
-    then
-	echo "Too high!"
-    else
-	echo ""
-	echo "Congratualations! You guessed right!"
-    fi
+function welcomemessage {
+echo "How many files are there in current directory?"
 }
 
-while [[ $count -ne $guess ]]    # One loop...
-do
-    read -p "Guess how many files are in the current directory? " guess
-    # echo "You entered: $guess"
-    echo $(correct_guess $guess $count)
-    echo ""
+welcomemessage
+
+nooffiles=$(pwd | ls | wc -l)
+
+until [[ $response -eq $nooffiles ]]; do
+	read response
+	if [[ $response -gt $nooffiles ]]
+	then
+		echo "You entered $response, which is greater than the requested number, try again"
+	elif [[ $response -lt $nooffiles ]]
+	then
+		echo "You entered $response, which is lower than the requested numner, try again"
+	fi
 done
+
+echo "You have guessed the right number, $response, Bravo."
+echo "End Program."
